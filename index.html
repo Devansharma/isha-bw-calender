@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Isha Banaswadi Programs Calendar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      body.dark{background:#151b1b;color:#e8ebe5}.dark .sidebar,.dark .topbar,.dark .calendar-grid,.dark .modal{background:#1d2524;border-color:#34403e}.dark .topbar,.dark .sidebar{border-color:#34403e}.dark .brand,.dark h1,.dark h2,.dark .summary-number{color:#f0f2ec}.dark .search input,.dark .switcher button,.dark .view-select button,.dark input,.dark select,.dark textarea{background:#222c2a;color:#e8ebe5;border-color:#43504d}.dark .weekday{background:#1a2221;border-color:#34403e;color:#a9b1ad}.dark .day-cell{background:#1d2524;border-color:#34403e}.dark .day-cell:hover{background:#25302e}.dark .day-number{color:#d1d8d3}.dark .other-month .day-number,.dark .summary-row,.dark .nav-item,.dark .program-option,.dark label{color:#a9b3ae}.dark .team-card{background:#25302e;color:#d2d9d4}.dark .profile{border-color:#34403e}.dark .switcher{border-color:#43504d}.dark .switcher button{border-color:#43504d}.dark .create-btn{box-shadow:none}.dark .event-inner-engineering{background:#4c2b22;color:#ffc9ae}.dark .event-hatha-yoga{background:#4a4121;color:#f5da7b}.dark .event-sadhguru-special{background:#1f4938;color:#a9dec3}.dark .event-volunteer{background:#3c2c4a;color:#d8bdf0}.dark .event-community{background:#1f4253;color:#b6ddf1}.dark .event-lunar-observance{background:#3e3c59;color:#ded4ff}.theme-btn{border:1px solid #43504d;background:#222c2a;color:#f1f3ee;border-radius:6px;padding:8px 10px;cursor:pointer;font:600 12px 'DM Sans',sans-serif}.calendar-header{display:grid;grid-template-columns:minmax(0,1fr) 270px;align-items:end}.view-controls{justify-content:flex-end;min-width:270px;flex-shrink:0}.view-select{width:126px}.view-select button{width:100%;white-space:nowrap}@media(max-width:800px){.calendar-header{grid-template-columns:minmax(0,1fr) auto}.view-controls{min-width:0}.view-select{display:none}}
+    </style>
+    <style>
+      .event-advanced-isha-programs{background:#e9f3ed;color:#38755e}.event-isha-official-program{background:#e7f2f8;color:#397ba6}
+      .dark .event-advanced-isha-programs{background:#1f4938;color:#a9dec3}.dark .event-isha-official-program{background:#1f4253;color:#b6ddf1}
+      .event-tooltip{position:fixed;z-index:20;display:none;max-width:250px;padding:11px 13px;border:1px solid #dfe4df;border-radius:7px;background:#fff;color:#33403d;box-shadow:0 10px 28px #17242035;font:12px/1.55 'DM Sans',sans-serif;white-space:pre-line;pointer-events:none}.dark .event-tooltip{border-color:#465450;background:#293432;color:#e4e9e4;box-shadow:0 10px 28px #0008}.event-tooltip.show{display:block}
+    </style>
+    <style>
+      html,body{width:100%;height:100%;overflow:hidden}.app-shell{height:100dvh;min-height:0}.sidebar{height:100dvh;overflow-y:auto}.main-content{height:100dvh;overflow:hidden}.calendar-area{height:calc(100dvh - 76px);display:flex;flex-direction:column;min-height:0}.calendar-header,.summary-row{flex-shrink:0}.calendar-grid{flex:1;min-height:0;grid-template-rows:37px repeat(6,minmax(0,1fr));overflow:hidden}.weekday{height:auto}.day-cell{height:auto;min-height:0;overflow:hidden}.modal{max-height:calc(100dvh - 32px);overflow-y:auto}@media(max-width:800px){.sidebar{overflow-y:auto}.calendar-area{height:calc(100dvh - 76px);padding-bottom:14px}.summary-row{margin:16px 0 10px}.calendar-grid{grid-template-rows:30px repeat(6,minmax(0,1fr))}.weekday{padding-top:9px}.day-cell{padding:5px}}@media(max-height:680px) and (min-width:801px){.sidebar{padding-top:18px}.create-btn{margin:19px 0}.calendar-list{margin-top:18px}.program-option{margin:8px 0}.calendar-area{padding-top:19px}.summary-row{margin:15px 0 10px}}
+    </style>
+  </head>
+  <body class="dark">
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand"><img src="images/logo.jpg" alt="Isha Foundation logo" style="width:30px;height:30px;object-fit:contain" /><span>Isha <b>Banaswadi</b></span></div>
+        <button class="create-btn" id="newEventBtn"><span>＋</span> Create event</button>
+        <nav>
+          <p class="nav-label">CALENDAR</p>
+          <button class="nav-item active"><span>▣</span> All programs <em id="eventCount">0</em></button>
+        </nav>
+        <section class="calendar-list">
+          <div class="section-heading"><p>PROGRAMS</p><button id="addCalendar" aria-label="Add calendar">＋</button></div>
+          <label class="program-option"><input type="checkbox" checked data-filter="Inner Engineering" /><i class="dot orange"></i>Inner Engineering</label>
+          <label class="program-option"><input type="checkbox" checked data-filter="Hatha Yoga" /><i class="dot gold"></i>Hatha Yoga</label>
+          <label class="program-option"><input type="checkbox" checked data-filter="Advanced Isha Programs" /><i class="dot green"></i>Advanced Isha Programs</label>
+          <label class="program-option"><input type="checkbox" checked data-filter="Isha Official Program" /><i class="dot blue"></i>Isha Official Program</label>
+          <label class="program-option"><input type="checkbox" data-filter="Lunar Observance" /><i class="dot violet"></i>Lunar Observances</label>
+        </section>
+        <div class="team-card"><div class="team-icon">♧</div><div><b>One shared calendar</b><span>Changes are saved instantly</span></div></div>
+        <div class="profile"><div class="avatar">DS</div><div><b>Program team</b><span>Calendar editor</span></div><button>•••</button></div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <button class="mobile-menu" id="menuBtn">☰</button>
+          <div class="search"><span>⌕</span><input id="searchInput" placeholder="Search programs, locations..." /></div>
+          <div class="top-actions"><button class="theme-btn" id="authBtn" title="Sign in to edit the shared calendar">Sign in</button><button class="theme-btn" id="themeBtn" title="Toggle color theme">☀ Light</button><button class="icon-btn" title="Notifications">♢</button><div class="collaborators" title="Program team"><span class="mini-avatar a1">A</span><span class="mini-avatar a2">M</span><span class="mini-avatar a3">R</span><span class="more-users">+7</span></div></div>
+        </header>
+        <div class="calendar-area">
+          <section class="calendar-header">
+            <div><p class="eyebrow">ISHA BANASWADI PROGRAMS CALENDAR</p><h1 id="monthTitle">July 2026</h1></div>
+            <div class="view-controls"><div class="switcher"><button id="prevMonth" aria-label="Previous month">‹</button><button id="todayBtn">Today</button><button id="nextMonth" aria-label="Next month">›</button></div><div class="view-select"><button id="monthYearDisplay" class="selected" type="button">July 2026</button></div></div>
+          </section>
+          <section class="summary-row"><div><span class="summary-number" id="monthEventCount">0</span><span> programs this month</span></div><p><i></i> Calendar synced just now</p></section>
+          <section class="calendar-grid" id="calendarGrid"></section>
+        </div>
+      </main>
+    </div>
+
+    <div class="modal-backdrop" id="eventModal" aria-hidden="true">
+      <form class="modal" id="eventForm">
+        <div class="modal-heading"><div><p class="eyebrow">PROGRAM DETAILS</p><h2 id="modalTitle">Create event</h2></div><button type="button" class="close-modal" id="closeModal">×</button></div>
+        <input type="hidden" id="eventId" />
+        <label>Program name<input id="title" required placeholder="e.g. Inner Engineering Total" /></label>
+        <div class="form-row"><label>Start date<input id="startDate" type="date" required /></label><label>End date<input id="endDate" type="date" required /></label></div>
+        <div class="form-row"><label>Category<select id="category" required><option value="">Select a category</option><option>Inner Engineering</option><option>Hatha Yoga</option><option>Advanced Isha Programs</option><option>Isha Official Program</option><option value="Lunar Observance" hidden>Lunar Observance</option></select></label><label>Created by<input id="createdBy" required placeholder="Your name" /></label></div>
+        <label>Location <span class="optional">(optional)</span><input id="location" placeholder="Isha Yoga Center" /></label>
+        <label>Notes <span class="optional">(optional)</span><textarea id="notes" rows="2" placeholder="Add useful details for the team"></textarea></label>
+        <div class="form-actions"><button type="button" class="delete-btn" id="deleteBtn">Delete event</button><span></span><button type="button" class="cancel-btn" id="cancelBtn">Cancel</button><button class="save-btn" type="submit">Save event</button></div>
+      </form>
+    </div>
+    <div class="toast" id="toast"></div>
+    <div class="event-tooltip" id="eventTooltip" role="tooltip"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
