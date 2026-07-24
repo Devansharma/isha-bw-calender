@@ -63,16 +63,9 @@ async function loadSharedEvents() {
   events = data.map(calendarEvent);
   render();
 }
-async function updateAuthButton() {
-  if (!supabaseClient) { $('#authBtn').style.display = 'none'; return; }
-  const {data:{session}} = await supabaseClient.auth.getSession();
-  $('#authBtn').textContent = session ? 'Sign out' : 'Sign in';
-}
 async function initializeCalendar() {
   if (!supabaseClient) { events = defaultEvents(); save(); render(); return; }
-  await updateAuthButton();
   await loadSharedEvents();
-  supabaseClient.auth.onAuthStateChange(async () => { await updateAuthButton(); await loadSharedEvents(); });
   supabaseClient.channel('isha-calendar-events').on('postgres_changes', {event:'*', schema:'public', table:'events'}, loadSharedEvents).subscribe();
 }
 function slug(value) { return value.toLowerCase().replaceAll(' ', '-'); }
@@ -177,8 +170,6 @@ $('#eventForm').addEventListener('submit', async event => {
   const data = {id:id || `e${Date.now()}`, title:$('#title').value.trim(), startDate:$('#startDate').value, endDate:$('#endDate').value, category:$('#category').value, createdBy:$('#createdBy').value.trim(), location:$('#location').value.trim(), notes:$('#notes').value.trim()};
   if (data.startDate && data.endDate && data.endDate < data.startDate) { toast('End date must be on or after the start date'); return; }
   if (supabaseClient) {
-    const {data:{session}} = await supabaseClient.auth.getSession();
-    if (!session) { toast('Sign in before editing the shared calendar'); return; }
     const {error} = await supabaseClient.from('events').upsert(databaseEvent(data));
     if (error) { toast(`Could not save event: ${error.message}`); return; }
     await loadSharedEvents();
@@ -188,7 +179,7 @@ $('#eventForm').addEventListener('submit', async event => {
   }
   closeModal(); toast(id ? 'Event updated for the team' : 'New program added to the calendar');
 });
-$('#deleteBtn').onclick = async () => { const id = $('#eventId').value; if (id && confirm('Delete this event?')) { if (supabaseClient) { const {data:{session}} = await supabaseClient.auth.getSession(); if (!session) return toast('Sign in before editing the shared calendar'); const {error} = await supabaseClient.from('events').delete().eq('id', id); if (error) return toast(`Could not delete event: ${error.message}`); await loadSharedEvents(); } else { events = events.filter(event => event.id !== id); save(); render(); } closeModal(); toast('Event deleted'); } };
+$('#deleteBtn').onclick = async () => { const id = $('#eventId').value; if (id && confirm('Delete this event?')) { if (supabaseClient) { const {error} = await supabaseClient.from('events').delete().eq('id', id); if (error) return toast(`Could not delete event: ${error.message}`); await loadSharedEvents(); } else { events = events.filter(event => event.id !== id); save(); render(); } closeModal(); toast('Event deleted'); } };
 $('#prevMonth').onclick = () => { viewDate = new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1); render(); };
 $('#nextMonth').onclick = () => { viewDate = new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1); render(); };
 $('#todayBtn').onclick = () => { viewDate = new Date(2026, 6, 1); render(); };
@@ -198,14 +189,5 @@ $('#menuBtn').onclick = () => $('#sidebar').classList.toggle('open');
 $('#addCalendar').onclick = () => toast('More program calendars can be added when connected to your team workspace');
 $('#themeBtn').onclick = () => { document.body.classList.toggle('dark'); const dark = document.body.classList.contains('dark'); $('#themeBtn').textContent = dark ? '☀ Light' : '☾ Dark'; localStorage.setItem('isha-calendar-theme', dark ? 'dark' : 'light'); };
 if (localStorage.getItem('isha-calendar-theme') === 'light') $('#themeBtn').click();
-$('#authBtn').onclick = async () => {
-  if (!supabaseClient) return;
-  const {data:{session}} = await supabaseClient.auth.getSession();
-  if (session) { await supabaseClient.auth.signOut({scope:'local'}); events = defaultEvents(); render(); toast('Signed out'); return; }
-  const email = window.prompt('Enter your Isha team email address');
-  if (!email) return;
-  const {error} = await supabaseClient.auth.signInWithOtp({email, options:{emailRedirectTo:window.location.href}});
-  toast(error ? `Could not send sign-in link: ${error.message}` : 'Check your email for the secure sign-in link');
-};
 window.addEventListener('storage', event => { if (!supabaseClient && event.key === 'isha-calendar-events') { events = JSON.parse(event.newValue || '[]').map(normalize); render(); toast('Calendar updated by a teammate'); } });
 initializeCalendar();

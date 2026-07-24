@@ -11,12 +11,11 @@ create table if not exists public.events (
 );
 
 alter table public.events enable row level security;
-grant select on public.events to anon, authenticated;
-grant insert, update, delete on public.events to authenticated;
+grant select, insert, update, delete on public.events to anon, authenticated;
 
 create policy "Anyone can read calendar events" on public.events for select to anon, authenticated using (true);
-create policy "Team members can add events" on public.events for insert to authenticated with check (true);
-create policy "Team members can update events" on public.events for update to authenticated using (true) with check (true);
-create policy "Team members can delete events" on public.events for delete to authenticated using (true);
+create policy "Anyone can add events" on public.events for insert to anon, authenticated with check (true);
+create policy "Anyone can update events" on public.events for update to anon, authenticated using (true) with check (true);
+create policy "Anyone can delete events" on public.events for delete to anon, authenticated using (true);
 
 alter publication supabase_realtime add table public.events;
