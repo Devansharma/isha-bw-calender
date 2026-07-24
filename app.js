@@ -170,7 +170,11 @@ $('#eventForm').addEventListener('submit', async event => {
   const data = {id:id || `e${Date.now()}`, title:$('#title').value.trim(), startDate:$('#startDate').value, endDate:$('#endDate').value, category:$('#category').value, createdBy:$('#createdBy').value.trim(), location:$('#location').value.trim(), notes:$('#notes').value.trim()};
   if (data.startDate && data.endDate && data.endDate < data.startDate) { toast('End date must be on or after the start date'); return; }
   if (supabaseClient) {
-    const {error} = await supabaseClient.from('events').upsert(databaseEvent(data));
+    const existing = events.some(item => item.id === id);
+    const request = existing
+      ? supabaseClient.from('events').update(databaseEvent(data)).eq('id', id)
+      : supabaseClient.from('events').insert(databaseEvent(data));
+    const {error} = await request;
     if (error) { toast(`Could not save event: ${error.message}`); return; }
     await loadSharedEvents();
   } else {
