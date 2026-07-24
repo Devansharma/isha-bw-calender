@@ -60,14 +60,7 @@ function calendarEvent(row) {
 async function loadSharedEvents() {
   const {data, error} = await supabaseClient.from('events').select('*').order('start_date');
   if (error) { toast(`Could not load shared calendar: ${error.message}`); return; }
-  if (data.length === 0) {
-    const {data:{session}} = await supabaseClient.auth.getSession();
-    if (!session) { events = []; render(); return; }
-    const initial = defaultEvents();
-    const {error: seedError} = await supabaseClient.from('events').upsert(initial.map(databaseEvent));
-    if (seedError) { toast(`Could not create initial calendar: ${seedError.message}`); return; }
-    events = initial;
-  } else events = data.map(calendarEvent);
+  events = data.map(calendarEvent);
   render();
 }
 async function updateAuthButton() {
