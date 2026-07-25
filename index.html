@@ -12,12 +12,28 @@
       body.dark{background:#151b1b;color:#e8ebe5}.dark .sidebar,.dark .topbar,.dark .calendar-grid,.dark .modal{background:#1d2524;border-color:#34403e}.dark .topbar,.dark .sidebar{border-color:#34403e}.dark .brand,.dark h1,.dark h2,.dark .summary-number{color:#f0f2ec}.dark .search input,.dark .switcher button,.dark .view-select button,.dark input,.dark select,.dark textarea{background:#222c2a;color:#e8ebe5;border-color:#43504d}.dark .weekday{background:#1a2221;border-color:#34403e;color:#a9b1ad}.dark .day-cell{background:#1d2524;border-color:#34403e}.dark .day-cell:hover{background:#25302e}.dark .day-number{color:#d1d8d3}.dark .other-month .day-number,.dark .summary-row,.dark .nav-item,.dark .program-option,.dark label{color:#a9b3ae}.dark .team-card{background:#25302e;color:#d2d9d4}.dark .profile{border-color:#34403e}.dark .switcher{border-color:#43504d}.dark .switcher button{border-color:#43504d}.dark .create-btn{box-shadow:none}.dark .event-inner-engineering{background:#4c2b22;color:#ffc9ae}.dark .event-hatha-yoga{background:#4a4121;color:#f5da7b}.dark .event-sadhguru-special{background:#1f4938;color:#a9dec3}.dark .event-volunteer{background:#3c2c4a;color:#d8bdf0}.dark .event-community{background:#1f4253;color:#b6ddf1}.dark .event-lunar-observance{background:#3e3c59;color:#ded4ff}.theme-btn{border:1px solid #43504d;background:#222c2a;color:#f1f3ee;border-radius:6px;padding:8px 10px;cursor:pointer;font:600 12px 'DM Sans',sans-serif}.calendar-header{display:grid;grid-template-columns:minmax(0,1fr) 270px;align-items:end}.view-controls{justify-content:flex-end;min-width:270px;flex-shrink:0}.view-select{width:126px}.view-select button{width:100%;white-space:nowrap}@media(max-width:800px){.calendar-header{grid-template-columns:minmax(0,1fr) auto}.view-controls{min-width:0}.view-select{display:none}}
     </style>
     <style>
-      .event-advanced-isha-programs{background:#e9f3ed;color:#38755e}.event-isha-official-program{background:#e7f2f8;color:#397ba6}
-      .dark .event-advanced-isha-programs{background:#1f4938;color:#a9dec3}.dark .event-isha-official-program{background:#1f4253;color:#b6ddf1}
+      .event-advanced-isha-programs{background:#e9f3ed;color:#38755e}.event-isha-official-program{background:#e7f2f8;color:#397ba6}.event-others{background:#f0ebf5;color:#75568e}
+      .dark .event-advanced-isha-programs{background:#1f4938;color:#a9dec3}.dark .event-isha-official-program{background:#1f4253;color:#b6ddf1}.dark .event-others{background:#3c2c4a;color:#d8bdf0}
       .event-tooltip{position:fixed;z-index:20;display:none;max-width:250px;padding:11px 13px;border:1px solid #dfe4df;border-radius:7px;background:#fff;color:#33403d;box-shadow:0 10px 28px #17242035;font:12px/1.55 'DM Sans',sans-serif;white-space:pre-line;pointer-events:none}.dark .event-tooltip{border-color:#465450;background:#293432;color:#e4e9e4;box-shadow:0 10px 28px #0008}.event-tooltip.show{display:block}
     </style>
     <style>
       html,body{width:100%;height:100%;overflow:hidden}.app-shell{height:100dvh;min-height:0}.sidebar{height:100dvh;overflow-y:auto}.main-content{height:100dvh;overflow:hidden}.calendar-area{height:calc(100dvh - 76px);display:flex;flex-direction:column;min-height:0}.calendar-header,.summary-row{flex-shrink:0}.calendar-grid{flex:1;min-height:0;grid-template-rows:37px repeat(6,minmax(0,1fr));overflow:hidden}.weekday{height:auto}.day-cell{height:auto;min-height:0;overflow:hidden}.modal{max-height:calc(100dvh - 32px);overflow-y:auto}@media(max-width:800px){.sidebar{overflow-y:auto}.calendar-area{height:calc(100dvh - 76px);padding-bottom:14px}.summary-row{margin:16px 0 10px}.calendar-grid{grid-template-rows:30px repeat(6,minmax(0,1fr))}.weekday{padding-top:9px}.day-cell{padding:5px}}@media(max-height:680px) and (min-width:801px){.sidebar{padding-top:18px}.create-btn{margin:19px 0}.calendar-list{margin-top:18px}.program-option{margin:8px 0}.calendar-area{padding-top:19px}.summary-row{margin:15px 0 10px}}
+    </style>
+    <style>
+      .next-event{display:flex;align-items:center;gap:8px;max-width:245px;padding:7px 11px;border:1px solid #dde4dd;border-radius:7px;color:#53615d;font-size:11px}.next-event i{width:7px;height:7px;flex:0 0 auto;border-radius:50%;background:#d7602d}.next-event b{color:#2f3b38}.dark .next-event{border-color:#43504d;color:#b8c0bb}.dark .next-event b{color:#eef2ec}@media(max-width:600px){.next-event{display:none}}
+    </style>
+    <style>
+      .past-date{background:#fafaf7}.past-date .day-number{color:#bac1bd}.past-date .events{opacity:.58}.dark .past-date{background:#19201f}.dark .past-date .day-number{color:#65706b}
+      .blank-day{cursor:default;pointer-events:none}.blank-day:hover{background:inherit}
+    </style>
+    <style>
+      .quick-filters{display:flex;gap:7px;margin-top:18px;flex-shrink:0}.filter-chip{border:1px solid #dce2dc;background:#fff;border-radius:999px;padding:6px 11px;color:#687370;font:600 11px 'DM Sans',sans-serif;cursor:pointer}.filter-chip.active{border-color:#d7602d;background:#fcedE7;color:#b8532d}.dark .filter-chip{border-color:#43504d;background:#222c2a;color:#b9c1bc}.dark .filter-chip.active{border-color:#a84a25;background:#4c2b22;color:#ffc9ae}.calendar-layout{display:grid;grid-template-columns:minmax(0,1fr) 264px;gap:16px;flex:1;min-height:0}.calendar-layout .calendar-grid{height:100%;min-height:0}.schedule-panel{overflow:auto;padding:16px;border:1px solid #e1e6e0;border-radius:8px;background:#fff}.dark .schedule-panel{border-color:#3d4946;background:#1d2524}.panel-heading{display:flex;justify-content:space-between;align-items:flex-start}.panel-heading h2{font-size:18px}.panel-add{border:0;border-radius:5px;background:#d7602d;color:#fff;padding:7px 9px;font:600 11px 'DM Sans',sans-serif;cursor:pointer}.selected-events,.upcoming-events{margin-top:13px}.panel-event{padding:9px 0;border-bottom:1px solid #edf0eb;cursor:pointer}.dark .panel-event{border-color:#34403e}.panel-event:last-child{border-bottom:0}.panel-event b,.panel-event span{display:block}.panel-event b{font-size:12px;color:#3f4b48}.dark .panel-event b{color:#e4eae5}.panel-event span{margin-top:2px;color:#89928e;font-size:10px}.panel-empty{color:#929a96;font-size:11px;padding:8px 0}.panel-divider{height:1px;background:#e5e9e4;margin:18px 0}.dark .panel-divider{background:#34403e}@media(max-width:1050px){.calendar-layout{grid-template-columns:1fr}.schedule-panel{display:none}}@media(max-width:800px){.quick-filters{margin-top:11px}.filter-chip{padding:5px 9px;font-size:10px}}
+    </style>
+    <style>
+      .panel-event{position:relative;padding-left:25px!important;transition:transform .16s ease}.panel-event:hover{transform:translateX(2px)}.panel-event:before{content:attr(data-initial);position:absolute;left:0;top:9px;display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#dfe9df;color:#526c55;font-size:8px;font-weight:700}.dark .panel-event:before{background:#32473e;color:#c6ded0}.selected-day{box-shadow:inset 0 0 0 2px #d7602d}.event{transition:transform .14s ease,filter .14s ease}.event:hover{transform:translateX(2px)}.event-range-start{border-radius:4px 1px 1px 4px}.event-range-middle{border-radius:1px}.event-range-end{border-radius:1px 4px 4px 1px}.mobile-create{display:none;position:fixed;right:20px;bottom:20px;z-index:3;width:50px;height:50px;border:0;border-radius:50%;background:#d7602d;color:#fff;box-shadow:0 8px 20px #0004;font-size:26px;cursor:pointer}@media(max-width:800px){.mobile-create{display:block}}
+    </style>
+    <style>
+      .view-modes{display:flex;border:1px solid #dce2dc;border-radius:6px;overflow:hidden}.mode-btn,.dashboard-btn{border:0;background:#fff;color:#687370;padding:8px 9px;font:600 11px 'DM Sans',sans-serif;cursor:pointer}.mode-btn.active{background:#fcedE7;color:#b8532d}.dashboard-btn{border:1px solid #dce2dc;border-radius:6px}.dark .view-modes,.dark .dashboard-btn{border-color:#43504d}.dark .mode-btn,.dark .dashboard-btn{background:#222c2a;color:#bac3bd}.dark .mode-btn.active{background:#4c2b22;color:#ffc9ae}.agenda-view{flex:1;min-height:0;overflow:auto;border:1px solid #e1e6e0;border-radius:8px;background:#fff}.dark .agenda-view{border-color:#3d4946;background:#1d2524}.agenda-item{display:grid;grid-template-columns:74px 1fr;gap:12px;padding:15px;border-bottom:1px solid #edf0eb;cursor:pointer;transition:background .15s}.agenda-item:hover{background:#fcfaf5}.dark .agenda-item{border-color:#34403e}.dark .agenda-item:hover{background:#25302e}.agenda-date{color:#d7602d;font-size:12px;font-weight:700}.agenda-title{display:flex;align-items:center;gap:8px}.agenda-title b{font-size:14px}.agenda-item p,.agenda-item small{margin:4px 0 0;color:#828c87;font-size:11px}.status-badge{border-radius:999px;padding:3px 6px;background:#e7f2f8;color:#397ba6;font-size:9px;font-weight:700}.status-draft{opacity:.72}.status-cancelled{text-decoration:line-through;opacity:.48}.status-completed{opacity:.62}.dashboard-modal{max-width:560px}.dashboard-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:4px 0 26px}.dashboard-stats div{padding:14px;border-radius:7px;background:#f5f6f1}.dark .dashboard-stats div{background:#25302e}.dashboard-stats b,.dashboard-stats span{display:block}.dashboard-stats b{font:700 25px 'Playfair Display',serif}.dashboard-stats span{margin-top:3px;color:#808985;font-size:10px}.dashboard-categories div{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #e9ece7;color:#69736f;font-size:12px}.dark .dashboard-categories div{border-color:#34403e;color:#c6cec9}@media(max-width:800px){.view-modes{display:none}.dashboard-btn{display:none}.agenda-item{grid-template-columns:60px 1fr;padding:12px}.agenda-title b{font-size:12px}}
     </style>
   </head>
   <body class="dark">
@@ -35,7 +51,7 @@
           <label class="program-option"><input type="checkbox" checked data-filter="Hatha Yoga" /><i class="dot gold"></i>Hatha Yoga</label>
           <label class="program-option"><input type="checkbox" checked data-filter="Advanced Isha Programs" /><i class="dot green"></i>Advanced Isha Programs</label>
           <label class="program-option"><input type="checkbox" checked data-filter="Isha Official Program" /><i class="dot blue"></i>Isha Official Program</label>
-          <label class="program-option"><input type="checkbox" data-filter="Lunar Observance" /><i class="dot violet"></i>Lunar Observances</label>
+          <label class="program-option"><input type="checkbox" checked data-filter="Others" /><i class="dot violet"></i>Others</label>
         </section>
         <div class="team-card"><div class="team-icon">♧</div><div><b>One shared calendar</b><span>Changes are saved instantly</span></div></div>
         <div class="profile"><div class="avatar">DS</div><div><b>Program team</b><span>Calendar editor</span></div><button>•••</button></div>
@@ -45,17 +61,19 @@
         <header class="topbar">
           <button class="mobile-menu" id="menuBtn">☰</button>
           <div class="search"><span>⌕</span><input id="searchInput" placeholder="Search programs, locations..." /></div>
-          <div class="top-actions"><button class="theme-btn" id="themeBtn" title="Toggle color theme">☀ Light</button><button class="icon-btn" title="Notifications">♢</button><div class="collaborators" title="Program team"><span class="mini-avatar a1">A</span><span class="mini-avatar a2">M</span><span class="mini-avatar a3">R</span><span class="more-users">+7</span></div></div>
+          <div class="top-actions"><div class="next-event" id="nextEvent"><i></i><span>Finding next program…</span></div><button class="theme-btn" id="themeBtn" title="Toggle color theme">☀ Light</button></div>
         </header>
         <div class="calendar-area">
           <section class="calendar-header">
             <div><p class="eyebrow">ISHA BANASWADI PROGRAMS CALENDAR</p><h1 id="monthTitle">July 2026</h1></div>
-            <div class="view-controls"><div class="switcher"><button id="prevMonth" aria-label="Previous month">‹</button><button id="todayBtn">Today</button><button id="nextMonth" aria-label="Next month">›</button></div><div class="view-select"><button id="monthYearDisplay" class="selected" type="button">July 2026</button></div></div>
+            <div class="view-controls"><div class="switcher"><button id="prevMonth" aria-label="Previous month">‹</button><button id="todayBtn">Today</button><button id="nextMonth" aria-label="Next month">›</button></div><div class="view-select"><button id="monthYearDisplay" class="selected" type="button">July 2026</button></div><div class="view-modes"><button class="mode-btn active" data-view="month">Month</button><button class="mode-btn" data-view="agenda">Agenda</button></div><button class="dashboard-btn" id="dashboardBtn">Dashboard</button></div>
           </section>
+          <section class="quick-filters" aria-label="Date filters"><button class="filter-chip active" data-quick-filter="all">All events</button><button class="filter-chip" data-quick-filter="upcoming">Upcoming</button><button class="filter-chip" data-quick-filter="week">This week</button></section>
           <section class="summary-row"><div><span class="summary-number" id="monthEventCount">0</span><span> programs this month</span></div><p><i></i> Calendar synced just now</p></section>
-          <section class="calendar-grid" id="calendarGrid"></section>
+          <section class="calendar-layout" id="monthView"><section class="calendar-grid" id="calendarGrid"></section><aside class="schedule-panel"><p class="eyebrow">UPCOMING PROGRAMS</p><div class="upcoming-events" id="upcomingEvents"></div></aside></section><section class="agenda-view" id="agendaView" hidden></section>
         </div>
       </main>
+      <button class="mobile-create" id="mobileCreateBtn" aria-label="Create event">＋</button>
     </div>
 
     <div class="modal-backdrop" id="eventModal" aria-hidden="true">
@@ -64,7 +82,8 @@
         <input type="hidden" id="eventId" />
         <label>Program name<input id="title" required placeholder="e.g. Inner Engineering Total" /></label>
         <div class="form-row"><label>Start date<input id="startDate" type="date" required /></label><label>End date<input id="endDate" type="date" required /></label></div>
-        <div class="form-row"><label>Category<select id="category" required><option value="">Select a category</option><option>Inner Engineering</option><option>Hatha Yoga</option><option>Advanced Isha Programs</option><option>Isha Official Program</option><option value="Lunar Observance" hidden>Lunar Observance</option></select></label><label>Created by<input id="createdBy" required placeholder="Your name" /></label></div>
+        <div class="form-row"><label>Category<select id="category" required><option value="">Select a category</option><option>Inner Engineering</option><option>Hatha Yoga</option><option>Advanced Isha Programs</option><option>Isha Official Program</option><option>Others</option></select></label><label>Status<select id="status"><option>Draft</option><option>Confirmed</option><option>Cancelled</option><option>Completed</option></select></label></div>
+        <label>Created by<input id="createdBy" required placeholder="Your name" /></label>
         <label>Location <span class="optional">(optional)</span><input id="location" placeholder="Isha Yoga Center" /></label>
         <label>Notes <span class="optional">(optional)</span><textarea id="notes" rows="2" placeholder="Add useful details for the team"></textarea></label>
         <div class="form-actions"><button type="button" class="delete-btn" id="deleteBtn">Delete event</button><span></span><button type="button" class="cancel-btn" id="cancelBtn">Cancel</button><button class="save-btn" type="submit">Save event</button></div>
@@ -72,8 +91,10 @@
     </div>
     <div class="toast" id="toast"></div>
     <div class="event-tooltip" id="eventTooltip" role="tooltip"></div>
+    <div class="modal-backdrop" id="dashboardModal" aria-hidden="true"><section class="modal dashboard-modal"><div class="modal-heading"><div><p class="eyebrow">PROGRAM DASHBOARD</p><h2>Calendar overview</h2></div><button type="button" class="close-modal" id="closeDashboard">×</button></div><div class="dashboard-stats" id="dashboardStats"></div><p class="eyebrow">PROGRAM COUNTS</p><div class="dashboard-categories" id="dashboardCategories"></div></section></div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-config.js"></script>
+    <script src="calendar-core.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

@@ -8,4 +8,12 @@
 
 If saving is blocked by a row-level-security error, run [`supabase/repair-anonymous-policies.sql`](supabase/repair-anonymous-policies.sql) once in the Supabase SQL Editor.
 
+To permanently remove any previously imported Lunar Observance records, run [`supabase/remove-lunar-observances.sql`](supabase/remove-lunar-observances.sql) once in the Supabase SQL Editor.
+
+To add event status to an existing Supabase table, run [`supabase/add-event-status.sql`](supabase/add-event-status.sql) once in the Supabase SQL Editor.
+
 `supabase-config.js` only contains a browser-safe publishable key. Never add a Supabase `service_role` or secret key to this repository. Because editing is anonymous, anyone with the calendar link can change its events.
+
+## Run tests before pushing
+
+Run `npm test` to validate multi-day event display, category migration, required-field validation, and Supabase event mapping.

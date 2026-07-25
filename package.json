@@ -1,0 +1,7 @@
+{
+  "name": "isha-banaswadi-programs-calendar",
+  "private": true,
+  "scripts": {
+    "test": "node --test"
+  }
+}
