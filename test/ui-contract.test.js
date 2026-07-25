@@ -7,6 +7,7 @@ const root = path.join(__dirname, '..');
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const app = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
 const schema = fs.readFileSync(path.join(root, 'supabase', 'schema.sql'), 'utf8');
+const categoryRepairSql = fs.readFileSync(path.join(root, 'supabase', 'repair-category-constraint.sql'), 'utf8');
 
 test('starts in dark mode and includes the official local logo', () => {
   assert.match(html, /<body class="dark">/);
@@ -67,6 +68,8 @@ test('event status, dashboard, upcoming panel, and hover tooltip are wired', () 
   assert.match(html, /id="dashboardBtn"/);
   assert.match(html, /id="dashboardStats"/);
   assert.match(html, /id="upcomingEvents"/);
+  assert.match(html, /id="mobileUpcomingBtn"/);
+  assert.match(html, /id="mobileUpcomingEvents"/);
   assert.match(html, /id="eventTooltip" role="tooltip"/);
   assert.match(app, /showTooltip/);
 });
@@ -75,9 +78,12 @@ test('mobile layout can open and close the sidebar and has a floating create but
   assert.match(html, /id="menuBtn"/);
   assert.match(html, /id="closeMenu"/);
   assert.match(html, /id="mobileCreateBtn"/);
+  assert.match(html, /id="mobileUpcomingModal"/);
   assert.match(html, /@media\(max-width:800px\)\{\.close-sidebar\{display:block\}\}/);
   assert.match(app, /\$\(\'#menuBtn\'\)\.onclick = \(\) => \$\(\'#sidebar\'\)\.classList\.toggle\(\'open\'\)/);
   assert.match(app, /\$\(\'#closeMenu\'\)\.onclick = \(\) => \$\(\'#sidebar\'\)\.classList\.remove\(\'open\'\)/);
+  assert.match(app, /\$\(\'#mobileUpcomingBtn\'\)\.onclick = \(\) => \$\(\'#mobileUpcomingModal\'\)\.classList\.add\(\'open\'\)/);
+  assert.match(app, /\$\(\'#mobileUpcomingEvents\'\)\.addEventListener\('click'/);
 });
 
 test('responsive CSS prevents full-page scrolling and supports compact screens', () => {
@@ -85,6 +91,7 @@ test('responsive CSS prevents full-page scrolling and supports compact screens',
   assert.match(html, /\.app-shell\{height:100dvh;min-height:0\}/);
   assert.match(html, /\.calendar-grid\{flex:1;min-height:0;grid-template-rows:37px repeat\(6,minmax\(0,1fr\)\);overflow:hidden\}/);
   assert.match(html, /@media\(max-width:1050px\)\{\.calendar-layout\{grid-template-columns:1fr\}\.schedule-panel\{display:none\}\}/);
+  assert.match(html, /@media\(max-width:1050px\)\{\.mobile-upcoming-btn\{display:inline-flex;align-items:center\}\}/);
   assert.match(html, /@media\(max-width:800px\)/);
   assert.match(html, /@media\(max-height:680px\) and \(min-width:801px\)/);
 });
@@ -121,4 +128,14 @@ test('Supabase anonymous shared calendar wiring and schema cover current fields'
   assert.match(schema, /for insert/);
   assert.match(schema, /for update/);
   assert.match(schema, /for delete/);
+});
+
+test('Supabase category repair script matches the app categories', () => {
+  assert.match(categoryRepairSql, /drop constraint if exists events_category_check/);
+  assert.match(categoryRepairSql, /add constraint events_category_check/);
+  for (const category of ['Inner Engineering', 'Hatha Yoga', 'Advanced Isha Programs', 'Isha Official Program', 'Others']) {
+    assert.match(categoryRepairSql, new RegExp(`'${category}'`));
+  }
+  assert.match(categoryRepairSql, /where category = 'Guru Pooja'/);
+  assert.match(categoryRepairSql, /where category = 'Lunar Observance'/);
 });

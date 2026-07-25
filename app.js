@@ -69,7 +69,9 @@ function updateNextEvent() {
 }
 function updateSchedulePanels() {
   const upcoming = filteredEvents().filter(event => event.category !== 'Lunar Observance' && event.startDate >= currentDateKey()).sort((a, b) => a.startDate.localeCompare(b.startDate)).slice(0, 5);
-  $('#upcomingEvents').innerHTML = upcoming.length ? upcoming.map(event => `<div class="panel-event" data-id="${event.id}" data-initial="${(event.createdBy || '?').trim().charAt(0).toUpperCase()}"><b>${event.title}</b><span>${formatEventDate(event)}</span></div>`).join('') : '<div class="panel-empty">No upcoming programs.</div>';
+  const html = upcoming.length ? upcoming.map(event => `<div class="panel-event" data-id="${event.id}" data-initial="${(event.createdBy || '?').trim().charAt(0).toUpperCase()}"><b>${event.title}</b><span>${formatEventDate(event)}</span></div>`).join('') : '<div class="panel-empty">No upcoming programs.</div>';
+  $('#upcomingEvents').innerHTML = html;
+  $('#mobileUpcomingEvents').innerHTML = html;
 }
 function renderAgenda(monthEvents) {
   const agenda = $('#agendaView');
@@ -216,6 +218,10 @@ document.querySelectorAll('[data-quick-filter]').forEach(button => button.addEve
 document.querySelectorAll('[data-view]').forEach(button => button.addEventListener('click', () => { activeView = button.dataset.view; document.querySelectorAll('[data-view]').forEach(item => item.classList.toggle('active', item === button)); render(); }));
 $('#mobileCreateBtn').onclick = () => openModal(selectedDate);
 document.querySelector('.schedule-panel').addEventListener('click', event => { const item = event.target.closest('.panel-event'); if (item) openModal(null, events.find(entry => entry.id === item.dataset.id)); });
+$('#mobileUpcomingBtn').onclick = () => $('#mobileUpcomingModal').classList.add('open');
+$('#closeMobileUpcoming').onclick = () => $('#mobileUpcomingModal').classList.remove('open');
+$('#mobileUpcomingModal').addEventListener('click', event => { if (event.target === $('#mobileUpcomingModal')) $('#mobileUpcomingModal').classList.remove('open'); });
+$('#mobileUpcomingEvents').addEventListener('click', event => { const item = event.target.closest('.panel-event'); if (item) { $('#mobileUpcomingModal').classList.remove('open'); openModal(null, events.find(entry => entry.id === item.dataset.id)); } });
 $('#agendaView').addEventListener('click', event => { const item = event.target.closest('.agenda-item'); if (item) openModal(null, events.find(entry => entry.id === item.dataset.id)); });
 $('#dayEventList').addEventListener('click', event => { const item = event.target.closest('.day-event-item'); if (item) { closeDayModal(); openModal(null, events.find(entry => entry.id === item.dataset.id)); } });
 $('#dashboardBtn').onclick = () => { renderDashboard(); $('#dashboardModal').classList.add('open'); };

@@ -12,6 +12,8 @@ To permanently remove any previously imported Lunar Observance records, run [`su
 
 To add event status to an existing Supabase table, run [`supabase/add-event-status.sql`](supabase/add-event-status.sql) once in the Supabase SQL Editor.
 
+If saving an event fails with `violates check constraint "events_category_check"`, run [`supabase/repair-category-constraint.sql`](supabase/repair-category-constraint.sql) once in the Supabase SQL Editor.
+
 `supabase-config.js` only contains a browser-safe publishable key. Never add a Supabase `service_role` or secret key to this repository. Because editing is anonymous, anyone with the calendar link can change its events.
 
 ## Run tests before pushing
