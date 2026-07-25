@@ -38,6 +38,9 @@
     <style>
       .close-sidebar{display:none;margin-left:auto;border:0;background:transparent;color:#8d9792;font-size:28px;line-height:1;cursor:pointer}@media(max-width:800px){.close-sidebar{display:block}}
     </style>
+    <style>
+      .day-cell{display:grid;grid-template-rows:auto minmax(0,1fr);gap:5px}.events{min-height:0;margin-top:0;overflow:hidden;padding-right:1px}.event{height:auto!important;min-height:19px;margin-bottom:3px;padding:4px 5px!important;font-size:10px!important;line-height:1.2!important;border-radius:3px!important;white-space:nowrap}.event:last-child{margin-bottom:0}.more-event{display:block;width:100%;border:0;background:transparent;color:#d7602d;padding:2px 3px;text-align:left;font:700 10px 'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dark .more-event{color:#ffc9ae}.day-events-modal{max-width:520px}.day-event-list{display:grid;gap:9px;max-height:min(58dvh,430px);overflow:auto;padding-right:4px}.day-event-item{border:1px solid #e4e9e3;border-radius:7px;padding:11px;cursor:pointer;background:#fff}.dark .day-event-item{border-color:#34403e;background:#222c2a}.day-event-item:hover{border-color:#d7602d}.day-event-item b,.day-event-item span,.day-event-item small{display:block}.day-event-item b{font-size:14px}.day-event-item span{margin-top:4px;color:#6c7773;font-size:11px}.day-event-item small{margin-top:3px;color:#8a948f;font-size:10px}.day-event-item p{margin:8px 0 0;color:#6c7773;font-size:11px;line-height:1.45}.dark .day-event-item span,.dark .day-event-item small,.dark .day-event-item p{color:#b9c1bc}@media(max-width:800px){.day-cell{gap:3px}.event{min-height:16px}.more-event{font-size:9px}}@media(max-width:500px){.event{min-height:14px;font-size:8px!important;line-height:1.1!important}.events{margin-top:0}.more-event{font-size:8px;padding:1px 2px}}
+    </style>
   </head>
   <body class="dark">
     <div class="app-shell">
@@ -94,6 +97,7 @@
     </div>
     <div class="toast" id="toast"></div>
     <div class="event-tooltip" id="eventTooltip" role="tooltip"></div>
+    <div class="modal-backdrop" id="dayModal" aria-hidden="true"><section class="modal day-events-modal"><div class="modal-heading"><div><p class="eyebrow">PROGRAMS ON THIS DATE</p><h2 id="dayModalTitle">Programs</h2></div><button type="button" class="close-modal" id="closeDayModal">×</button></div><div class="day-event-list" id="dayEventList"></div></section></div>
     <div class="modal-backdrop" id="dashboardModal" aria-hidden="true"><section class="modal dashboard-modal"><div class="modal-heading"><div><p class="eyebrow">PROGRAM DASHBOARD</p><h2>Calendar overview</h2></div><button type="button" class="close-modal" id="closeDashboard">×</button></div><div class="dashboard-stats" id="dashboardStats"></div><p class="eyebrow">PROGRAM COUNTS</p><div class="dashboard-categories" id="dashboardCategories"></div></section></div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-config.js"></script>

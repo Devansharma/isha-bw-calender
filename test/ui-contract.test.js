@@ -95,6 +95,22 @@ test('past and other-month date UI is intentionally non-interactive', () => {
   assert.match(app, /const dateAttribute = cell\.canCreate \? `data-date="\$\{key\}"` : ''/);
 });
 
+test('crowded date cells expose every event through a clear day list modal', () => {
+  assert.match(app, /const maxEventsPerDayCell = 3/);
+  assert.match(app, /dayEvents\.length > 1 \? dayEvents\.slice\(0, 1\) : dayEvents\.slice\(0, maxEventsPerDayCell\)/);
+  assert.match(app, /dayEvents\.length > 1 \? `<button class="more-event"/);
+  assert.match(app, /View all \$\{dayEvents\.length\} programs/);
+  assert.match(app, /function openDayModal\(day\)/);
+  assert.match(html, /id="dayModal"/);
+  assert.match(html, /id="dayEventList"/);
+  assert.match(html, /\.day-cell\{display:grid;grid-template-rows:auto minmax\(0,1fr\);gap:5px\}/);
+  assert.match(html, /\.events\{min-height:0;margin-top:0;overflow:hidden/);
+  assert.match(html, /\.more-event\{display:block;width:100%;border:0;background:transparent/);
+  assert.match(html, /\.day-event-list\{display:grid;gap:9px;max-height:min\(58dvh,430px\);overflow:auto/);
+  assert.match(html, /\.event\{height:auto!important;min-height:19px/);
+  assert.match(html, /@media\(max-width:500px\)\{\.event\{min-height:14px;font-size:8px!important/);
+});
+
 test('Supabase anonymous shared calendar wiring and schema cover current fields', () => {
   assert.match(html, /@supabase\/supabase-js@2/);
   assert.match(html, /supabase-config\.js/);

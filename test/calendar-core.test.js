@@ -137,6 +137,20 @@ test('builds a fixed 6-week month grid with blank other-month dates and inert pa
   assert.deepEqual(cells.find(cell => cell.key === '2026-07-29').events.map(event => event.id), ['test-3', 'lunar-1']);
 });
 
+test('keeps every same-day event available in a crowded calendar cell', () => {
+  const crowdedEvents = Array.from({length:6}, (_, index) => ({
+    id:`crowded-${index + 1}`,
+    title:`Program ${index + 1}`,
+    startDate:'2026-07-25',
+    endDate:'2026-07-25',
+    category:'Others',
+    status:'Confirmed',
+    createdBy:'Team'
+  }));
+  const day = calendarCells(crowdedEvents, new Date(2026, 6, 1), '2026-07-25').find(cell => cell.key === '2026-07-25');
+  assert.deepEqual(day.events.map(event => event.id), ['crowded-1', 'crowded-2', 'crowded-3', 'crowded-4', 'crowded-5', 'crowded-6']);
+});
+
 test('summarizes next event timing for the top bar', () => {
   assert.equal(nextEventSummary(eventSet, '2026-07-25').text, 'Next: Surya Kriya today');
   assert.equal(nextEventSummary(eventSet, '2026-07-27').text, 'Next: Samyama Sadhana tomorrow');

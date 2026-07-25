@@ -40,6 +40,7 @@ let viewDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
 let quickFilter = 'all';
 let selectedDate = currentDateKey();
 let activeView = 'month';
+const maxEventsPerDayCell = 3;
 
 function save() { localStorage.setItem('isha-calendar-events', JSON.stringify(events)); }
 function defaultEvents() {
@@ -99,7 +100,8 @@ function render() {
   grid.innerHTML = ['SUN','MON','TUE','WED','THU','FRI','SAT'].map(day => `<div class="weekday">${day}</div>`).join('');
   const cells = calendarCells(current, viewDate, todayKey).map(cell => {
     const {key, number, isCurrentMonth, events:dayEvents} = cell;
-    const rendered = dayEvents.slice(0, 3).map(event => {
+    const visibleEvents = dayEvents.length > 1 ? dayEvents.slice(0, 1) : dayEvents.slice(0, maxEventsPerDayCell);
+    const rendered = visibleEvents.map(event => {
       const continues = event.startDate !== event.endDate;
       const title = event.title || 'Untitled program';
       const label = continues && key !== event.startDate ? `↳ ${title}` : title;
@@ -111,7 +113,8 @@ function render() {
     const dateAttribute = cell.canCreate ? `data-date="${key}"` : '';
     const otherMonth = isCurrentMonth ? '' : 'other-month';
     const blank = isCurrentMonth ? '' : 'blank-day';
-    return `<div class="day-cell ${otherMonth} ${today} ${past} ${blank}" ${dateAttribute}><span class="day-number">${number}</span><div class="events">${rendered}${dayEvents.length > 3 ? `<div class="more-event">+${dayEvents.length - 3} more</div>` : ''}</div></div>`;
+    const more = dayEvents.length > 1 ? `<button class="more-event" type="button" data-day="${key}">View all ${dayEvents.length} programs</button>` : '';
+    return `<div class="day-cell ${otherMonth} ${today} ${past} ${blank}" ${dateAttribute}><span class="day-number">${number}</span><div class="events">${rendered}${more}</div></div>`;
   });
   grid.insertAdjacentHTML('beforeend', cells.join(''));
 }
@@ -136,6 +139,13 @@ function openModal(day, event) {
   setTimeout(() => $('#title').focus(), 30);
 }
 function closeModal() { $('#eventModal').classList.remove('open'); }
+function openDayModal(day) {
+  const dayEvents = filteredEvents().filter(event => event.category !== 'Lunar Observance' && event.startDate && event.endDate && event.startDate <= day && event.endDate >= day).sort((a, b) => a.startDate.localeCompare(b.startDate) || a.title.localeCompare(b.title));
+  $('#dayModalTitle').textContent = new Intl.DateTimeFormat('en', {weekday:'long', day:'numeric', month:'long', year:'numeric'}).format(new Date(`${day}T00:00:00`));
+  $('#dayEventList').innerHTML = dayEvents.length ? dayEvents.map(event => `<article class="day-event-item status-${slug(event.status)}" data-id="${event.id}"><b>${event.title}</b><span>${event.category} · ${event.status}</span><small>${formatEventDate(event)}${event.createdBy ? ` · Created by ${event.createdBy}` : ''}</small>${event.notes ? `<p>${event.notes}</p>` : ''}</article>`).join('') : '<div class="agenda-empty">No programs on this date.</div>';
+  $('#dayModal').classList.add('open');
+}
+function closeDayModal() { $('#dayModal').classList.remove('open'); }
 function toast(message) { const el = $('#toast'); el.textContent = message; el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 2600); }
 function positionTooltip(pointerEvent) {
   const padding = 14, width = tooltip.offsetWidth || 250, height = tooltip.offsetHeight || 110;
@@ -153,6 +163,8 @@ function showTooltip(pointerEvent, event) {
 grid.addEventListener('click', event => {
   const eventElement = event.target.closest('.event');
   if (eventElement) return openModal(null, events.find(item => item.id === eventElement.dataset.id));
+  const moreElement = event.target.closest('.more-event');
+  if (moreElement) return openDayModal(moreElement.dataset.day);
   const cell = event.target.closest('.day-cell');
   if (cell?.dataset.date) openModal(cell.dataset.date);
 });
@@ -205,9 +217,12 @@ document.querySelectorAll('[data-view]').forEach(button => button.addEventListen
 $('#mobileCreateBtn').onclick = () => openModal(selectedDate);
 document.querySelector('.schedule-panel').addEventListener('click', event => { const item = event.target.closest('.panel-event'); if (item) openModal(null, events.find(entry => entry.id === item.dataset.id)); });
 $('#agendaView').addEventListener('click', event => { const item = event.target.closest('.agenda-item'); if (item) openModal(null, events.find(entry => entry.id === item.dataset.id)); });
+$('#dayEventList').addEventListener('click', event => { const item = event.target.closest('.day-event-item'); if (item) { closeDayModal(); openModal(null, events.find(entry => entry.id === item.dataset.id)); } });
 $('#dashboardBtn').onclick = () => { renderDashboard(); $('#dashboardModal').classList.add('open'); };
 $('#closeDashboard').onclick = () => $('#dashboardModal').classList.remove('open');
 $('#dashboardModal').addEventListener('click', event => { if (event.target === $('#dashboardModal')) $('#dashboardModal').classList.remove('open'); });
+$('#closeDayModal').onclick = closeDayModal;
+$('#dayModal').addEventListener('click', event => { if (event.target === $('#dayModal')) closeDayModal(); });
 $('#menuBtn').onclick = () => $('#sidebar').classList.toggle('open');
 $('#closeMenu').onclick = () => $('#sidebar').classList.remove('open');
 $('#addCalendar').onclick = () => toast('More program calendars can be added when connected to your team workspace');
