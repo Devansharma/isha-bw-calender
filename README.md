@@ -16,4 +16,4 @@ To add event status to an existing Supabase table, run [`supabase/add-event-stat
 
 ## Run tests before pushing
 
-Run `npm test` to validate multi-day event display, category migration, required-field validation, and Supabase event mapping.
+Run `npm test` to validate the calendar helpers and UI contract before pushing. The suite covers event validation, multi-day ranges, category/status handling, quick filters, month/agenda/dashboard calculations, past-date rules, tooltip details, responsive/mobile controls, and Supabase schema wiring.
