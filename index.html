@@ -35,11 +35,14 @@
     <style>
       .view-modes{display:flex;border:1px solid #dce2dc;border-radius:6px;overflow:hidden}.mode-btn,.dashboard-btn{border:0;background:#fff;color:#687370;padding:8px 9px;font:600 11px 'DM Sans',sans-serif;cursor:pointer}.mode-btn.active{background:#fcedE7;color:#b8532d}.dashboard-btn{border:1px solid #dce2dc;border-radius:6px}.dark .view-modes,.dark .dashboard-btn{border-color:#43504d}.dark .mode-btn,.dark .dashboard-btn{background:#222c2a;color:#bac3bd}.dark .mode-btn.active{background:#4c2b22;color:#ffc9ae}.agenda-view{flex:1;min-height:0;overflow:auto;border:1px solid #e1e6e0;border-radius:8px;background:#fff}.dark .agenda-view{border-color:#3d4946;background:#1d2524}.agenda-item{display:grid;grid-template-columns:74px 1fr;gap:12px;padding:15px;border-bottom:1px solid #edf0eb;cursor:pointer;transition:background .15s}.agenda-item:hover{background:#fcfaf5}.dark .agenda-item{border-color:#34403e}.dark .agenda-item:hover{background:#25302e}.agenda-date{color:#d7602d;font-size:12px;font-weight:700}.agenda-title{display:flex;align-items:center;gap:8px}.agenda-title b{font-size:14px}.agenda-item p,.agenda-item small{margin:4px 0 0;color:#828c87;font-size:11px}.status-badge{border-radius:999px;padding:3px 6px;background:#e7f2f8;color:#397ba6;font-size:9px;font-weight:700}.status-draft{opacity:.72}.status-cancelled{text-decoration:line-through;opacity:.48}.status-completed{opacity:.62}.dashboard-modal{max-width:560px}.dashboard-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:4px 0 26px}.dashboard-stats div{padding:14px;border-radius:7px;background:#f5f6f1}.dark .dashboard-stats div{background:#25302e}.dashboard-stats b,.dashboard-stats span{display:block}.dashboard-stats b{font:700 25px 'Playfair Display',serif}.dashboard-stats span{margin-top:3px;color:#808985;font-size:10px}.dashboard-categories div{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #e9ece7;color:#69736f;font-size:12px}.dark .dashboard-categories div{border-color:#34403e;color:#c6cec9}@media(max-width:800px){.view-modes{display:none}.dashboard-btn{display:none}.agenda-item{grid-template-columns:60px 1fr;padding:12px}.agenda-title b{font-size:12px}}
     </style>
+    <style>
+      .close-sidebar{display:none;margin-left:auto;border:0;background:transparent;color:#8d9792;font-size:28px;line-height:1;cursor:pointer}@media(max-width:800px){.close-sidebar{display:block}}
+    </style>
   </head>
   <body class="dark">
     <div class="app-shell">
       <aside class="sidebar" id="sidebar">
-        <div class="brand"><img src="images/logo.jpg" alt="Isha Foundation logo" style="width:30px;height:30px;object-fit:contain" /><span>Isha <b>Banaswadi</b></span></div>
+        <div class="brand"><img src="images/logo.jpg" alt="Isha Foundation logo" style="width:30px;height:30px;object-fit:contain" /><span>Isha <b>Banaswadi</b></span><button class="close-sidebar" id="closeMenu" aria-label="Close menu">×</button></div>
         <button class="create-btn" id="newEventBtn"><span>＋</span> Create event</button>
         <nav>
           <p class="nav-label">CALENDAR</p>

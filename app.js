@@ -31,7 +31,7 @@ const lunarEvents = [
 const $ = selector => document.querySelector(selector);
 const grid = $('#calendarGrid');
 const tooltip = $('#eventTooltip');
-const toKey = date => date.toISOString().slice(0, 10);
+const toKey = date => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 const isSupabaseConfigured = Boolean(window.SUPABASE_URL && window.SUPABASE_PUBLISHABLE_KEY && !window.SUPABASE_URL.includes('YOUR_') && !window.SUPABASE_PUBLISHABLE_KEY.includes('YOUR_'));
 const supabaseClient = isSupabaseConfigured ? window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_PUBLISHABLE_KEY) : null;
 const {normalizeEvent: normalize, occursOn, currentDateKey, validateEvent, databaseEvent, calendarEvent} = window.CalendarCore;
@@ -241,6 +241,7 @@ $('#dashboardBtn').onclick = () => { renderDashboard(); $('#dashboardModal').cla
 $('#closeDashboard').onclick = () => $('#dashboardModal').classList.remove('open');
 $('#dashboardModal').addEventListener('click', event => { if (event.target === $('#dashboardModal')) $('#dashboardModal').classList.remove('open'); });
 $('#menuBtn').onclick = () => $('#sidebar').classList.toggle('open');
+$('#closeMenu').onclick = () => $('#sidebar').classList.remove('open');
 $('#addCalendar').onclick = () => toast('More program calendars can be added when connected to your team workspace');
 $('#themeBtn').onclick = () => { document.body.classList.toggle('dark'); const dark = document.body.classList.contains('dark'); $('#themeBtn').textContent = dark ? '☀ Light' : '☾ Dark'; localStorage.setItem('isha-calendar-theme', dark ? 'dark' : 'light'); };
 if (localStorage.getItem('isha-calendar-theme') === 'light') $('#themeBtn').click();
